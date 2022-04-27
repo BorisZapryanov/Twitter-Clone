@@ -1,15 +1,17 @@
 <%-- 
-    Document   : header
-    Created on : Apr 12, 2022, 1:40:08 PM
-    Author     : icoza
+    Document   : all_user
+    Created on : Apr 26, 2022, 7:43:14 PM
+    Author     : bgebo
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="designs/homepage.css">
         <title>JSP Page</title>
     </head>
-    
+    <body>
+        <h1>Hello World!</h1>
+    </body>
+</html>
