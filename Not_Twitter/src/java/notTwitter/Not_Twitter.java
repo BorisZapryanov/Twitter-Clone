@@ -15,10 +15,9 @@ package notTwitter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
+
+
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -52,11 +51,15 @@ public class Not_Twitter extends HttpServlet {
         }
         
         //Check if logged in
-        //If not logged in, any action will simply say you must be logged in
-        if ( true ){
+        if (Login.checkUserIsLoggedIn(request))
+        {
             // would be nice to have a message
-            request.setAttribute("logged_in", false);
+            request.setAttribute("logged_in", true);
         } 
+        else
+        {
+            request.setAttribute("logged_in", false);
+        }
         /* Whenever one of these happens, it will redirect to the controller
          * The controller will do stuff like printing out all the tweets
          * Then the controller will pull up the jsp page, which has bits to 
@@ -71,9 +74,29 @@ public class Not_Twitter extends HttpServlet {
                 getServletContext().getRequestDispatcher(url).forward(request, response);
                 break;
             }
+            case "Explore":
+            {
+                break;
+            }
+            case "All_Users":
+            {
+                break;
+            }
+            case "User":
+            {
+                break;
+            }
             case "Login":
             {
                 response.sendRedirect("Login");
+                
+                break;
+            }
+            case "Logout":
+            {
+                HttpSession session = request.getSession();
+                session.setAttribute("username",  null);
+                response.sendRedirect("Not_Twitter");
                 break;
             }
             default:

@@ -20,10 +20,16 @@
         <button type="submit">All Users</button>
   </form>
   <br/>
-  <!-- check if user is logged in or not -->
+  <!-- check if user is logged in or not
+       
+  
+  -->
   <c:choose>
       <c:when test="${logged_in == true}">
-          
+        <form action="Not_Twitter" method="post">
+            <input type="hidden" id="action" name="action" value="Logout"/>
+            <button type="submit">Logout</button>
+        </form>
       </c:when>
       <c:otherwise> 
         <form action="Not_Twitter" method="post">
