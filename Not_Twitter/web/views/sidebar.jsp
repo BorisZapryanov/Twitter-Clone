@@ -7,19 +7,23 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="sidenav">
     <!-- Send request to the main controller -->
+    <div class="menu">
+    <ul>
     <form action="Not_Twitter" method="post">
         <input type="hidden" id="action" name="action" value="Home"/>
-        <button type="submit">Home</button>
+        <li><button class="button" type="submit">Home</button></li>
     </form>
   <form action="Not_Twitter" method="post">
         <input type="hidden" id="action" name="action" value="Explore"/>
-        <button type="submit">Explore</button>
+        <li><button class="button" type="submit">Explore</button></li>
   </form>
   <form action="Not_Twitter" method="post">
         <input type="hidden" id="action" name="action" value="All_Users"/>
-        <button type="submit">All Users</button>
+        <li><button class="button" type="submit">All Users</button></li>
   </form>
-  <br/>
+    
+    
+  
   <!-- check if user is logged in or not
        
   
@@ -28,15 +32,15 @@
       <c:when test="${logged_in == true}">
         <form action="Not_Twitter" method="post">
             <input type="hidden" id="action" name="action" value="Logout"/>
-            <button type="submit">Logout</button>
+            <li><button class="button" type="submit">Logout</button></li>
         </form>
       </c:when>
       <c:otherwise> 
         <form action="Not_Twitter" method="post">
             <input type="hidden" id="action" name="action" value="Login"/>
-            <button type="submit">Login</button>
-        </form>
+            <li><button class="button" type="submit">Login</button></li>
+        </form></ul></div>
     </c:otherwise> 
   </c:choose>
-  <div>User thing</div>
+  
 </div>

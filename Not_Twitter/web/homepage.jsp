@@ -14,12 +14,23 @@
         </c:when>
     </c:choose>
     <div class="search">
-        <h1>Home</h1>
+        
+       
+  
+ <h1>Home</h1>
         <form action="/action_page.php">
-      <input type="text" placeholder="Search.." name="search">
-      <button type="submit">Submit</button>
-    </form>
+      <div class="search-container">      
+      <input class="search-input" type="text" placeholder="Search.." name="search">
+      </div>
+      <button type="submit">Submit</button><br>
+    </form> 
+        
+     
+        
+        
+        
     </div>
+ 
 <jsp:include page="/views/footer.jsp" />
 
 
