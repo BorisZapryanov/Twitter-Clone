@@ -1,3 +1,7 @@
+body{
+    background-color: rgb(107, 107, 107);
+}
+
 .sidenav
 {
   height: 100%;
@@ -6,7 +10,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgb(125, 199, 221);
+  background-color: rgb(0, 162, 245);
   overflow-x: hidden;
   padding-top: 20px;
 }
@@ -18,12 +22,13 @@
   display: block;
 }
 .search{
-  background-color:   rgb(125, 199, 221);
+  background-color:   rgb(0, 162, 245);
   color: #ffffff;
   border-radius: 5px; 
   margin-left: 300px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
+  margin-right: 300px;
 }
 
 .main {
@@ -44,7 +49,7 @@ li a {
   color: #000;
   padding: 8px  8px 16px;
   text-decoration: none;
-  border-top: solid 1px rgb(125, 199, 221);
+  border-top: solid 1px rgb(0, 162, 245);
   border-radius: 5px;
 }
 li a:hover {
@@ -56,7 +61,7 @@ li a:hover {
   padding: 5px;
   background-color: #f1f1f1;
   text-align:center;
-  border: solid 2px rgb(125, 199, 221);
+  border: solid 2px rgb(0, 162, 245);
   border-radius: 5px;
 }
 .menu li {
@@ -66,14 +71,26 @@ li a:hover {
   border-top: solid 1px rgb(125, 199, 221);
   border-radius: 5px;
 }
+
+
 .button{
     border: none;
+    border-radius: 5px;
+    background-color: rgb(107, 107, 107);
 }
-
 .button:hover{
     opacity: 0.5;
     background-color: rgb(253, 253, 253)
 }
+
+.navbutton{
+    border: none; 
+}
+.navbutton:hover{
+    opacity: 0.5;
+}
+
+
 
 
 
@@ -113,4 +130,97 @@ li a:hover {
 
 .search-container .search-btn .fas {
     color: #5cbdbb;
+}
+
+
+
+
+
+.makeTweet{
+  background-color:   rgb(0, 162, 245);
+  color: #ffffff;
+  border-radius: 5px; 
+  margin-left: 300px; /* Same as the width of the sidenav */
+  margin-right: 300px;
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 500px;
+}
+.makeTweetBar
+{
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: rgb(0, 162, 245);
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+.makeTweetBar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.defaultProfile{
+  background-color:   rgb(0, 162, 245);
+  color: #ffffff;
+  border-radius: 5px; 
+  margin-left: 300px; /* Same as the width of the sidenav */
+  margin-right: 300px;
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 500px;
+  
+  
+}
+.flexContainer{
+    display: flex;
+  justify-content: center;
+}
+.mid{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.textTweet{
+    background-color:   rgb(0, 162, 245);
+  color: #ffffff;
+  border-radius: 5px; 
+  margin-left: 300px; /* Same as the width of the sidenav */
+  margin-right: 300px;
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 500px;
+}
+.imgTweet{
+    background-color:   rgb(0, 162, 245);
+  color: #ffffff;
+  border: solid 1px;
+  border-radius: 5px; 
+  margin-left: 300px; /* Same as the width of the sidenav */
+  margin-right: 300px;
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 500px;
+}
+
+table, th{
+  border:1px solid black;
+  font-size: 30px;
+}
+
+
+.userProfile{
+  background-color:   rgb(0, 162, 245);
+  color: #ffffff;
+  border-radius: 5px; 
+  margin-left: 300px; /* Same as the width of the sidenav */
+  margin-right: 300px;
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 500px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
 }

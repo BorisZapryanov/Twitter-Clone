@@ -11,15 +11,15 @@
     <ul>
     <form action="Not_Twitter" method="post">
         <input type="hidden" id="action" name="action" value="Home"/>
-        <li><button class="button" type="submit">Home</button></li>
+        <li><button class="navbutton" type="submit">Home</button></li>
     </form>
   <form action="Not_Twitter" method="post">
         <input type="hidden" id="action" name="action" value="Explore"/>
-        <li><button class="button" type="submit">Explore</button></li>
+        <li><button class="navbutton" type="submit">Explore</button></li>
   </form>
   <form action="Not_Twitter" method="post">
         <input type="hidden" id="action" name="action" value="All_Users"/>
-        <li><button class="button" type="submit">All Users</button></li>
+        <li><button class="navbutton" type="submit">All Users</button></li>
   </form>
     
     
@@ -30,17 +30,31 @@
   -->
   <c:choose>
       <c:when test="${logged_in == true}">
+          <%-- User Profile --%>
+           <div class ="userProfile">
+                <img src="assets/default.png" alt="alt"/>
+                <p class="mid">Username</p>
+                <button class="button" type="submit">Log Out</button>
+          </div>
+          
+          
         <form action="Not_Twitter" method="post">
             <input type="hidden" id="action" name="action" value="Logout"/>
-            <li><button class="button" type="submit">Logout</button></li>
+            <li><button class="navbutton" type="submit">Logout</button></li>
         </form>
       </c:when>
       <c:otherwise> 
         <form action="Not_Twitter" method="post">
             <input type="hidden" id="action" name="action" value="Login"/>
-            <li><button class="button" type="submit">Login</button></li>
+            <li><button class="navbutton" type="submit">Login</button></li>
         </form></ul></div>
+        
+        
+        
+        
+          
+        
     </c:otherwise> 
   </c:choose>
-  
+        
 </div>
