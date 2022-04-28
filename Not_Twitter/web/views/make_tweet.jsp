@@ -5,13 +5,26 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<div class="makeTweetBar">
+
 <div class="makeTweet">
-        <div class="search-container">
-        <input type="text" name="search" placeholder="Whats on your mind" class="search-input">
-        <button type="submit">Tweet</button><br>
+       
+            <form>
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <textarea id="postTweet" name="search" placeholder="Whats on your mind..." cols="30" rows="5" ></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <button class="button" type="submit">Tweet</button>
+                        </td>
+                        <td>
+                            <button class="button" type="submit">Upload Photo</button><br/>
+                        </td>
+                    </tr>
+                </table>  
+            </form>
+       
     </div>
-        <button type="submit">Upload Photo</button><br>
-    </div>
-</div>
+        <br/>

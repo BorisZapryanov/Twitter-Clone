@@ -33,7 +33,9 @@ public class UserModel
             
             String password = "";
             if ( results.next() ){
+                
                 password = results.getString("password");
+                
             } 
             //try email instead
             else
@@ -46,22 +48,23 @@ public class UserModel
                     String queryEmail = "select id, username, password, email from user "
                             + " where email = ? ";
 
-                    PreparedStatement statementEmail = connectionEmail.prepareStatement(query);
+                    PreparedStatement statementEmail = connectionEmail.prepareStatement(queryEmail);
 
                     // indexing starts with 1, why? it's ok to cry
-                    statementEmail.setString(1, user.getUsername());
+                    statementEmail.setString(1, user.getEmail());
 
                     ResultSet resultsEmail = statementEmail.executeQuery();
-
+                    
                     if ( resultsEmail.next() ){
+                        String h = resultsEmail.getString("email");
                         password = resultsEmail.getString("password");
                     } 
                     //Passing an object is actually passing the pointer of the object
                     //so making changes like this actually carry over
                     user.setUsername(resultsEmail.getString("username"));
-                    results.close();
-                    statement.close();
-                    connection.close();
+                    resultsEmail.close();
+                    statementEmail.close();
+                    connectionEmail.close();
 
                     return !password.isEmpty() && user.getPassword().equals(password);
                 }
@@ -71,13 +74,14 @@ public class UserModel
                      return false;
                 }
             }
+            
             results.close();
             statement.close();
             connection.close();
-            
             return !password.isEmpty() && user.getPassword().equals(password);
             
         }
+        
         //Then try the email instead, as per the chance that user logged in with email
         catch ( Exception ex )
         {
@@ -109,4 +113,38 @@ public class UserModel
             System.out.println(ex);
         }
      }
+     //test if has image
+     public static boolean hasImage(String username)
+     {
+         try
+         {
+            Connection connection = DBConnection.getDBConnection();
+            
+            String query = "select filename from user "
+                    + " where username = ? ";
+            
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setString(1, username);
+            String filename = null;
+            ResultSet results = statement.executeQuery();
+            if(results.next())
+            {
+                filename = results.getString("filename");
+            }
+            if(filename != null)
+            {
+                return true;
+            }
+            results.close();
+            statement.close();
+            connection.close();
+         }catch(Exception e)
+         {
+         }
+         return false;
+     }
+     //get user
+     
+     //get user arraylist
 }

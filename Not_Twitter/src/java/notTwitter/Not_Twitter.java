@@ -24,7 +24,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import notTwitter.Tweet;
+import notTwitter.User;
+import notTwitter.models.UserModel;
+import notTwitter.models.RequestTweet;
 /**
  *
  * @author icoza
@@ -47,7 +50,7 @@ public class Not_Twitter extends HttpServlet {
         //Make null become "" so switch doesnt bug out
         if(action == null)
         {
-            action = "";
+            action = "Home";
         }
         
         //Check if logged in
@@ -59,6 +62,7 @@ public class Not_Twitter extends HttpServlet {
         else
         {
             request.setAttribute("logged_in", false);
+            action = "Login";
         }
         /* Whenever one of these happens, it will redirect to the controller
          * The controller will do stuff like printing out all the tweets
@@ -70,13 +74,20 @@ public class Not_Twitter extends HttpServlet {
             //Placeholder, will do a thing to display proper tweets
             case "Home":
             {
+                
+                //ArrayList<Tweet> HomeTweets = RequestTweet.getHomeTweets();
                 String url = "/homepage.jsp";
                 getServletContext().getRequestDispatcher(url).forward(request, response);
                 break;
             }
             case "Explore":
             {
+                ArrayList<Tweet> allTweet = RequestTweet.getAllTweet();
+                request.setAttribute("allTweets", allTweet);
+                String url = "/explore.jsp";
+                getServletContext().getRequestDispatcher(url).forward(request, response);
                 break;
+                
             }
             case "All_Users":
             {

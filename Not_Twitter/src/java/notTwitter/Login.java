@@ -54,6 +54,7 @@ public class Login extends HttpServlet
                      {
                          HttpSession session = request.getSession();
                          session.setAttribute("username", primaryUser.getUsername());
+                         session.setAttribute("hasImage", UserModel.hasImage(primaryUser.getUsername()));
                          response.sendRedirect("Not_Twitter");
                      }
                      else
@@ -92,7 +93,8 @@ public class Login extends HttpServlet
                     UserModel.addUser(newUser);
                     HttpSession session = request.getSession();
                     session.setAttribute("username", newUser.getUsername());
-                    
+                    session.setAttribute("hasImage", UserModel.hasImage(newUser.getUsername()));
+                    response.sendRedirect("Not_Twitter");
                     
                 }catch(Exception ex)
                 {

@@ -11,9 +11,25 @@
         <servlet-name>Login</servlet-name>
         <servlet-class>notTwitter.Login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RequestImage</servlet-name>
+        <servlet-class>notTwitter.models.RequestImage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadImage</servlet-name>
+        <servlet-class>notTwitter.UploadImage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Not_Twitter</servlet-name>
         <url-pattern>/Not_Twitter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadImage</servlet-name>
+        <url-pattern>/UploadImage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestImage</servlet-name>
+        <url-pattern>/RequestImage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
