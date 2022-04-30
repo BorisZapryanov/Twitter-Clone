@@ -1,10 +1,16 @@
-package notTwitter;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package notTwitter.models;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import notTwitter.DBConnection;
 import notTwitter.models.UserModel;
 
 
@@ -57,7 +64,7 @@ public class UploadImage extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             String username = session.getAttribute("username").toString();
-
+            
             Connection connection = DBConnection.getDBConnection();
             String preparedSQL = "update user set image = ?, filename = ? "
                     + " where username = ?";

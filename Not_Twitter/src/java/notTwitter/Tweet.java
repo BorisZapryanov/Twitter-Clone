@@ -3,30 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package notTwitter;
+import notTwitter.models.Tweet_Model;
 import java.sql.Timestamp;
-import java.io.Serializable;
 
 /**
  *
  * @author bgebo
  */
-public class Tweet implements Serializable
+public class Tweet 
 {
     private int id;
     private String text;
     private int userid;
     private String filename;
     private Timestamp timestamp;
+    private boolean likedbyuser;
+    private int likecount;
+
+    
 
     public Tweet(String text, int userid) {
-        this(0, text, userid, null, null);
+        this(0, text, userid, null, null, false, 0);
     }
     
     public Tweet(String text, int userid, String filename) {
-        this(0, text, userid, filename, null);
+        this(0, text, userid, filename, null, false, 0);
     }
 
-    public Tweet(int id, String text, int userid, String filename, Timestamp timestamp) {
+    public Tweet(int id, String text, int userid, String filename, Timestamp timestamp, boolean likedByUser, int likeCount) {
         this.id = id;
         this.text = text;
         this.userid = userid;
@@ -45,6 +49,7 @@ public class Tweet implements Serializable
     }
 
     public int getUserid() {
+        userid = Tweet_Model.getTweetUser(id);
         return userid;
     }
 
@@ -56,6 +61,19 @@ public class Tweet implements Serializable
         return timestamp;
     }
     
-    
+   public boolean isLikedbyuser() {
+        likedbyuser = Tweet_Model.getLikedByUser(id, "Ari");
+        return likedbyuser;
+    }
+   public String getUserName()
+   {
+       String userName = Tweet_Model.getTweetUsername(userid);
+       return userName;
+   }
+    public int getLikecount() 
+    {
+        likecount = Tweet_Model.getLikeCount(id);
+        return likecount;
+    }
     
 }

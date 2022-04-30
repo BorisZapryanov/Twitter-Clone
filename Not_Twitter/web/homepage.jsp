@@ -24,7 +24,7 @@
              <jsp:include page="/views/make_tweet.jsp"/>
         </c:when>
     </c:choose>
-   
+    <jsp:include page="/views/tweetView.jsp"/>
     
     
 

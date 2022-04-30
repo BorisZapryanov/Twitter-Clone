@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 import notTwitter.Tweet;
 import notTwitter.User;
 import notTwitter.models.UserModel;
-import notTwitter.models.RequestTweet;
+import notTwitter.models.Tweet_Model;
 /**
  *
  * @author icoza
@@ -75,14 +75,14 @@ public class Not_Twitter extends HttpServlet {
             case "Home":
             {
                 
-                //ArrayList<Tweet> HomeTweets = RequestTweet.getHomeTweets();
+                //ArrayList<Tweet> HomeTweets = Tweet_Model.getHomeTweets();
                 String url = "/homepage.jsp";
                 getServletContext().getRequestDispatcher(url).forward(request, response);
                 break;
             }
             case "Explore":
             {
-                ArrayList<Tweet> allTweet = RequestTweet.getAllTweet();
+                ArrayList<Tweet> allTweet = Tweet_Model.getAllTweet();
                 request.setAttribute("allTweets", allTweet);
                 String url = "/explore.jsp";
                 getServletContext().getRequestDispatcher(url).forward(request, response);
@@ -110,13 +110,38 @@ public class Not_Twitter extends HttpServlet {
                 response.sendRedirect("Not_Twitter");
                 break;
             }
+            case "Like":
+            {
+                 int tweetId = Integer.parseInt(request.getParameter("tweetId"));
+               
+                 String username = request.getParameter("username");
+                 Tweet_Model.Like(tweetId, username);
+                 response.sendRedirect("Not_Twitter");
+                break;
+            }
+            case "unLike":
+            {
+                int tweetId = Integer.parseInt(request.getParameter("tweetId"));
+                String username = request.getParameter("username");
+                Tweet_Model.unLike(tweetId, username);
+                response.sendRedirect("Not_Twitter");
+                break;
+            }
+            case "TweetImg":
+            {
+                
+            }
+            case "Tweet":
+            {
+                
+            }
             default:
             {
                 String url = "/homepage.jsp";
                 getServletContext().getRequestDispatcher(url).forward(request, response);
                 break;       
             }
-                
+              
             
         }
         

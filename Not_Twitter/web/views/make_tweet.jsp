@@ -8,7 +8,27 @@
 
 <div class="makeTweet">
        
-            <form>
+            <form action="Not_Twitter" method="post">
+                <table >
+                    <tr>
+                        <td colspan="2">
+                            <textarea id="postTweet" name="search" placeholder="Whats on your mind..." cols="30" rows="5" ></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                    
+                        <td>
+                            <input type="hidden" name="action" value="Tweet"/>
+                             <button class="button" type="submit">Tweet</button>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </table>  
+            </form>
+    <br/><!--  -->
+       <form>
                 <table>
                     <tr>
                         <td colspan="2">
@@ -20,11 +40,10 @@
                              <button class="button" type="submit">Tweet</button>
                         </td>
                         <td>
-                            <button class="button" type="submit">Upload Photo</button><br/>
+                            
                         </td>
                     </tr>
                 </table>  
             </form>
-       
     </div>
         <br/>

@@ -94,7 +94,8 @@ public class Login extends HttpServlet
                     HttpSession session = request.getSession();
                     session.setAttribute("username", newUser.getUsername());
                     session.setAttribute("hasImage", UserModel.hasImage(newUser.getUsername()));
-                    response.sendRedirect("Not_Twitter");
+                    String url = "/Not_Twitter";
+                    getServletContext().getRequestDispatcher(url).forward(request, response);
                     
                 }catch(Exception ex)
                 {
