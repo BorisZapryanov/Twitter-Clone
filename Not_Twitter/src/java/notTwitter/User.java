@@ -3,15 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package notTwitter;
+import notTwitter.models.UserModel;
 
-import java.io.Serializable;
 
 /** User object
- *  Is serializable
+ *  
  * @author bgebo
  */
-public class User implements Serializable 
+public class User  
 {
+    private String loggedInUser;
     private int id;
     private String username;
     private String password;
@@ -35,6 +36,15 @@ public class User implements Serializable
         this.password = password;
         this.filename = filename;
         this.email = email;
+    }
+    public User(int id, String username, String password, String filename, String email, String loggedInUser) 
+    {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.filename = filename;
+        this.email = email;
+        this.loggedInUser = loggedInUser;
     }
 
     public String getUsername() {
@@ -65,10 +75,21 @@ public class User implements Serializable
         return id;
     }
 
+    public String getLoggedInUser() {
+        return loggedInUser;
+    }
+
     public String getPassword() {
         return password;
     }
-    
-    
+    public boolean hasImage()
+    {
+        
+      return UserModel.hasImage(username);
+    }    
+    public boolean followedByUserTest()
+    {
+        return UserModel.followedByUserTest(this.username, loggedInUser);
+    }
 
 }

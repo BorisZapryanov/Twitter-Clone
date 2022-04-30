@@ -75,8 +75,10 @@ public class Not_Twitter extends HttpServlet {
             //Placeholder, will do a thing to display proper tweets
             case "Home":
             {
-                
-                //ArrayList<Tweet> HomeTweets = Tweet_Model.getHomeTweets();
+                HttpSession session = request.getSession();
+                String username = session.getAttribute("username").toString();
+                ArrayList<Tweet> allTweet = Tweet_Model.getHomeTweet(username);
+                request.setAttribute("allTweets", allTweet);
                 String url = "/homepage.jsp";
                 getServletContext().getRequestDispatcher(url).forward(request, response);
                 break;
@@ -96,11 +98,14 @@ public class Not_Twitter extends HttpServlet {
             }
             case "User":
             {
+                HttpSession session = request.getSession();
+                String username = session.getAttribute("username").toString();
                 String searchUsername = request.getParameter("search");
                 ArrayList<Tweet> allTweet = Tweet_Model.getAllTweetUser(searchUsername);
                 request.setAttribute("allTweets", allTweet);
-                User user = UserModel.getUser(searchUsername);
+                User user = UserModel.getUser(searchUsername, username);
                 String displayUsername = user.getUsername();
+                request.setAttribute("displayUserName", user);
                 request.setAttribute("displayUser", user);
                 String url = "/user.jsp";
                 getServletContext().getRequestDispatcher(url).forward(request, response);
@@ -137,10 +142,7 @@ public class Not_Twitter extends HttpServlet {
                 response.sendRedirect("Not_Twitter");
                 break;
             }
-            case "TweetImg":
-            {
-                break;
-            }
+            
             case "Tweet":
             {
                 String text = request.getParameter("tweet_text");
@@ -153,6 +155,23 @@ public class Not_Twitter extends HttpServlet {
                 response.sendRedirect("Not_Twitter");
                 break;
                 
+            }
+            case "follow":
+            {
+                String folowee = request.getParameter("folowee");
+                String currentUser = request.getParameter("currentUser");
+                UserModel.followUser(folowee, currentUser);
+                response.sendRedirect("Not_Twitter");
+                break;
+            }
+            case "unFollow":
+            {
+                String folowee = request.getParameter("folowee");
+                String currentUser = request.getParameter("currentUser");
+                UserModel.unfollowUser(folowee, currentUser);
+                
+                response.sendRedirect("Not_Twitter");
+                break;
             }
             default:
             {

@@ -128,6 +128,80 @@ public class Tweet_Model
             }
             return allTweetsUser;
         }
+        public static ArrayList<Tweet> getHomeTweet(String userName)
+        {
+            ArrayList<Tweet> homeTweet = new ArrayList();
+            try{
+                int userId = 0;
+                Connection connection2 = DBConnection.getDBConnection();
+                String query2 = "select id FROM user where username = ?";
+                
+                PreparedStatement statement2 = connection2.prepareStatement(query2);
+                statement2.setString(1, userName);
+                ResultSet results2 = statement2.executeQuery(); 
+                while(results2.next())
+                {
+                    userId = results2.getInt("id");
+                    try
+                    {
+                        Connection connection = DBConnection.getDBConnection();
+                        String query = "select id, text, user_id, timestamp, image_filename FROM tweet";
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        
+                        ResultSet results = statement.executeQuery(); 
+                        while(results.next())
+                        {
+                            Tweet currentTweet = null;
+                            if(results.getString("image_filename") == null)
+                            {
+                                String text = results.getString("text");
+                                Timestamp timestamp = results.getTimestamp("timestamp");
+                                int id = results.getInt("id");
+                                int user_id = results.getInt("user_id");
+                                currentTweet = new Tweet(id, text, user_id, null, timestamp, false, 0);
+                                
+                            }
+                            else
+                            {
+                                String text = results.getString("text");
+                                Timestamp timestamp = results.getTimestamp("timestamp");
+                                int id = results.getInt("id");
+                                int user_id = results.getInt("user_id");
+                                String filename = results.getString("image_filename");
+                                currentTweet = new Tweet(id, text, user_id, filename, timestamp, false, 0);
+                                
+                            }
+                  
+                                String tweetUser = getTweetUsername(currentTweet.getUserid());
+                                if(UserModel.followedByUserTest(userName, tweetUser))
+                                {
+                                    homeTweet.add(currentTweet);
+                                }
+                            
+                        }
+                         results.close();
+                        statement.close();
+                        connection.close();
+
+                        return homeTweet;
+                    }catch(Exception e)
+                    {
+                        
+                    }
+                    
+                    }
+                    results2.close();
+                    statement2.close();
+                    connection2.close();
+                    
+            }catch(Exception e)
+            {
+               System.out.println(e);
+               return homeTweet; 
+            }
+            return homeTweet;
+            
+        }
         
         /** To start, I know that this is an awful way to do this
          *  but for the purpose it is still the most convinient

@@ -144,7 +144,7 @@ public class UserModel
          }
          return false;
      }
-     public static User getUser(String username)
+     public static User getUser(String username, String loggedInUser)
      {
          User user = null;
          try
@@ -167,7 +167,7 @@ public class UserModel
                 filename = results.getString("filename");
                 id = results.getInt("id");
             }
-            user = new User(id, username, "", filename, "");
+            user = new User(id, username, "", filename, "", loggedInUser);
             results.close();
             statement.close();
             connection.close();
@@ -178,7 +178,233 @@ public class UserModel
          }
         return user;
      }
-     //get user
      
      //get user arraylist
+     
+     //Followed by user
+     public static boolean followedByUserTest(String mainUser, String followee)
+     {
+         
+         try
+         {
+            Connection connection1 = DBConnection.getDBConnection();
+            
+            String query1 = "select id from user "
+                    + " where username = ? ";
+            
+            PreparedStatement statement1 = connection1.prepareStatement(query1);
+            
+            statement1.setString(1, mainUser);
+           
+            
+            int mainId = 0;
+            ResultSet results1 = statement1.executeQuery();
+            if(results1.next())
+            {
+                 mainId = results1.getInt("id");
+                
+                 try
+                    {
+                       Connection connection2 = DBConnection.getDBConnection();
+
+                       String query2 = "select id from user "
+                               + " where username = ? ";
+
+                       PreparedStatement statement2 = connection2.prepareStatement(query2);
+
+                       statement2.setString(1, followee);
+                       
+
+                       int secondId = 0;
+                       ResultSet results2 = statement2.executeQuery();
+                       if(results2.next())
+                       {
+                            secondId = results2.getInt("id");
+                            try
+                            {
+                                Connection connection3 = DBConnection.getDBConnection();
+                                String query3 = "select id from following where followed_by_user_id = ? and "
+                                        + " following_user_id = ?";
+                                PreparedStatement statement3 = connection3.prepareStatement(query3);
+                                statement3.setInt(1, secondId);
+                                statement3.setInt(2, mainId);
+                                ResultSet results3 = statement3.executeQuery();
+                                if(results3.next())
+                                {
+                                    return true;
+                                }
+                                results3.close();
+                                statement3.close();
+                                connection3.close();
+                            }catch(Exception e)
+                            {
+                                      return false;  
+                            }
+                       }
+
+                       results2.close();
+                       statement2.close();
+                       connection2.close();
+                    }catch(Exception e)
+                    {
+                        return false;
+                    }
+            }
+            
+            results1.close();
+            statement1.close();
+            connection1.close();
+         }catch(Exception e)
+         {
+             return false;
+         }
+         return false;
+     }
+     public static void followUser(String mainUser, String followee)
+     {
+         try
+         {
+            Connection connection1 = DBConnection.getDBConnection();
+            
+            String query1 = "select id from user "
+                    + " where username = ? ";
+            
+            PreparedStatement statement1 = connection1.prepareStatement(query1);
+            
+            statement1.setString(1, mainUser);
+           
+            
+            int mainId = 0;
+            ResultSet results1 = statement1.executeQuery();
+            if(results1.next())
+            {
+                 mainId = results1.getInt("id");
+                
+                 try
+                    {
+                       Connection connection2 = DBConnection.getDBConnection();
+
+                       String query2 = "select id from user "
+                               + " where username = ? ";
+
+                       PreparedStatement statement2 = connection2.prepareStatement(query2);
+
+                       statement2.setString(1, followee);
+                       
+
+                       int secondId = 0;
+                       ResultSet results2 = statement2.executeQuery();
+                       if(results2.next())
+                       {
+                            secondId = results2.getInt("id");
+                            try
+                            {
+                                Connection connection3 = DBConnection.getDBConnection();
+                                String query3 = "insert into following ( followed_by_user_id, following_user_id ) values ( ?, ? )";
+                                PreparedStatement statement3 = connection3.prepareStatement(query3);
+                                statement3.setInt(1, secondId);
+                                statement3.setInt(2, mainId);
+                                statement3.execute();
+                               
+                              
+                                statement3.close();
+                                connection3.close();
+                            }catch(Exception ex)
+                            {
+                                 System.out.print(ex);
+                            }
+                       }
+
+                       results2.close();
+                       statement2.close();
+                       connection2.close();
+                    }catch(Exception e)
+                    {
+                        
+                    }
+            }
+            
+            results1.close();
+            statement1.close();
+            connection1.close();
+         }catch(Exception e)
+         {
+             
+         }
+         
+     }
+     public static void unfollowUser(String mainUser, String followee)
+     {
+         try
+         {
+            Connection connection1 = DBConnection.getDBConnection();
+            
+            String query1 = "select id from user "
+                    + " where username = ? ";
+            
+            PreparedStatement statement1 = connection1.prepareStatement(query1);
+            
+            statement1.setString(1, mainUser);
+           
+            
+            int mainId = 0;
+            ResultSet results1 = statement1.executeQuery();
+            if(results1.next())
+            {
+                 mainId = results1.getInt("id");
+                
+                 try
+                    {
+                       Connection connection2 = DBConnection.getDBConnection();
+
+                       String query2 = "select id from user "
+                               + " where username = ? ";
+
+                       PreparedStatement statement2 = connection2.prepareStatement(query2);
+
+                       statement2.setString(1, followee);
+                       
+
+                       int secondId = 0;
+                       ResultSet results2 = statement2.executeQuery();
+                       if(results2.next())
+                       {
+                            secondId = results2.getInt("id");
+                            try
+                            {
+                                Connection connection3 = DBConnection.getDBConnection();
+                                String query3 = "delete from following where followed_by_user_id = ? and "
+                                        + " following_user_id = ?";
+                                PreparedStatement statement3 = connection3.prepareStatement(query3);
+                                statement3.setInt(1, secondId);
+                                statement3.setInt(2, mainId);
+                                statement3.execute();
+                               
+                              
+                                statement3.close();
+                                connection3.close();
+                            }catch(Exception e)
+                            {
+                                      
+                            }
+                       }
+
+                       results2.close();
+                       statement2.close();
+                       connection2.close();
+                    }catch(Exception e)
+                    {
+                        
+                    }
+            }
+            
+            results1.close();
+            statement1.close();
+            connection1.close();
+         }catch(Exception e)
+         {
+             
+         }
+         
+     }
 }
