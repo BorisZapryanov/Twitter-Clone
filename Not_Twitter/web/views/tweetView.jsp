@@ -26,15 +26,31 @@
                             <td colspan="4">${tweet.getTimestamp()}</td>
                         </tr>
                         <tr>
-                            <td>user</td>
+                            <td>${tweet.getUserName()}</td>
                             <td>
-                                <form action="Not_Twitter">
-                                    <input type ="hidden" name="page" id="page" value="explore.jsp"/>
-                                    <input type="hidden" id="tweetId" name="tweetId" value="${tweet.getId()}"/>
-                                    <input type="hidden" id="username" name="username" value="${username}"/>
-                                    <input type="hidden" name="action" id="action" value="Like"/>
-                                    <button class="button" type="submit">like</button>
-                                </form>
+                                <p>${tweet.getLikecount()}</p>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${tweet.isLikedbyuser()}">
+                                        <form action="Not_Twitter">
+                                            <input type ="hidden" name="page" id="page" value="explore.jsp"/>
+                                            <input type="hidden" id="tweetId" name="tweetId" value="${tweet.getId()}"/>
+                                            <input type="hidden" id="username" name="username" value="${username}"/>
+                                            <input type="hidden" name="action" id="action" value="unLike"/>
+                                            <button class="button" type="submit">Un-Like</button>
+                                        </form>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form action="Not_Twitter">
+                                            <input type ="hidden" name="page" id="page" value="explore.jsp"/>
+                                            <input type="hidden" id="tweetId" name="tweetId" value="${tweet.getId()}"/>
+                                            <input type="hidden" id="username" name="username" value="${username}"/>
+                                            <input type="hidden" name="action" id="action" value="Like"/>
+                                            <button class="button" type="submit">like</button>
+                                        </form>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                             <td>
                                 <form action="Not_Twitter">

@@ -8,6 +8,10 @@
         <servlet-class>notTwitter.Not_Twitter</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TweetWithImg</servlet-name>
+        <servlet-class>notTwitter.models.TweetWithImg</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>notTwitter.Login</servlet-class>
     </servlet>
@@ -22,6 +26,10 @@
     <servlet-mapping>
         <servlet-name>Not_Twitter</servlet-name>
         <url-pattern>/Not_Twitter</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>TweetWithImg</servlet-name>
+        <url-pattern>/TweetWithImg</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UploadImage</servlet-name>

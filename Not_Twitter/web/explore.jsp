@@ -5,18 +5,7 @@
 <body>
     <jsp:include page="/views/sidebar.jsp" />
 
-    <div class="search">
-        <%-- This is the header  --%>
-        <img src="assets/output-onlinepngtools.png" alt="alt">
-        
-        <form action="/action_page.php">
-            <div class="search-container">
-                <input class="search-input" type="text" placeholder="Search.." name="search">
-            </div>
-            <button class="button" type="submit">Submit</button><br>
-        </form> 
-        
-    </div>
+    <jsp:include page="/views/search.jsp"/>
     <br/>
     <%--This is for posting tweets  --%>
     <c:choose>

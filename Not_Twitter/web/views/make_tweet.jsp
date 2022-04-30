@@ -8,16 +8,17 @@
 
 <div class="makeTweet">
        
-            <form action="Not_Twitter" method="post">
+            <form id="tweet" action="Not_Twitter" method="post">
                 <table >
                     <tr>
                         <td colspan="2">
-                            <textarea id="postTweet" name="search" placeholder="Whats on your mind..." cols="30" rows="5" ></textarea>
+                            <textarea id="tweet_text" name="tweet_text" placeholder="Whats on your mind..." cols="30" rows="5" ></textarea>
                         </td>
                     </tr>
                     <tr>
                     
                         <td>
+                            <input type="hidden" name="userName" value="${username}"/>
                             <input type="hidden" name="action" value="Tweet"/>
                              <button class="button" type="submit">Tweet</button>
                         </td>
@@ -28,16 +29,20 @@
                 </table>  
             </form>
     <br/><!--  -->
-       <form>
-                <table>
+       <form action="TweetWithImg" method="post" enctype="multipart/form-data">
+                <table >
                     <tr>
                         <td colspan="2">
-                            <textarea id="postTweet" name="search" placeholder="Whats on your mind..." cols="30" rows="5" ></textarea>
+                            <textarea id="tweet_text" name="tweet_text" placeholder="Whats on your mind..." cols="30" rows="5" ></textarea>
                         </td>
                     </tr>
                     <tr>
+                        <td> <input type="file" accept="image/*" name="file"></td>
+                    
                         <td>
-                             <button class="button" type="submit">Tweet</button>
+                            <input type="hidden" name="userName" value="${username}"/>
+                            
+                            <button class="button" type="submit">Tweet</button>
                         </td>
                         <td>
                             

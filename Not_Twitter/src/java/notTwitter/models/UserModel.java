@@ -144,6 +144,40 @@ public class UserModel
          }
          return false;
      }
+     public static User getUser(String username)
+     {
+         User user = null;
+         try
+         {
+            Connection connection = DBConnection.getDBConnection();
+            
+            String query = "select id, username, filename from user "
+                    + " where username = ? ";
+            
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setString(1, username);
+            String filename = null;
+            
+            int id = 0;
+            ResultSet results = statement.executeQuery();
+            if(results.next())
+            {
+                
+                filename = results.getString("filename");
+                id = results.getInt("id");
+            }
+            user = new User(id, username, "", filename, "");
+            results.close();
+            statement.close();
+            connection.close();
+            return user;
+         }catch(Exception e)
+         {
+             
+         }
+        return user;
+     }
      //get user
      
      //get user arraylist

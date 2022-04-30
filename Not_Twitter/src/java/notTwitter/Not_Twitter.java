@@ -57,6 +57,7 @@ public class Not_Twitter extends HttpServlet {
         if (Login.checkUserIsLoggedIn(request))
         {
             // would be nice to have a message
+           
             request.setAttribute("logged_in", true);
         } 
         else
@@ -95,6 +96,14 @@ public class Not_Twitter extends HttpServlet {
             }
             case "User":
             {
+                String searchUsername = request.getParameter("search");
+                ArrayList<Tweet> allTweet = Tweet_Model.getAllTweetUser(searchUsername);
+                request.setAttribute("allTweets", allTweet);
+                User user = UserModel.getUser(searchUsername);
+                String displayUsername = user.getUsername();
+                request.setAttribute("displayUser", user);
+                String url = "/user.jsp";
+                getServletContext().getRequestDispatcher(url).forward(request, response);
                 break;
             }
             case "Login":
@@ -107,6 +116,7 @@ public class Not_Twitter extends HttpServlet {
             {
                 HttpSession session = request.getSession();
                 session.setAttribute("username",  null);
+                
                 response.sendRedirect("Not_Twitter");
                 break;
             }
@@ -129,10 +139,19 @@ public class Not_Twitter extends HttpServlet {
             }
             case "TweetImg":
             {
-                
+                break;
             }
             case "Tweet":
             {
+                String text = request.getParameter("tweet_text");
+                //Since it is a session attribute which means it is an object
+                //and also in order to be a bit more responsive
+                //I pass the curent username in the jsp as a param
+                //and pull the param, I should instead cat to string however
+                String username = request.getParameter("userName");
+                Tweet_Model.makeTweet(text, username);
+                response.sendRedirect("Not_Twitter");
+                break;
                 
             }
             default:

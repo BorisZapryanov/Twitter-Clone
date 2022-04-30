@@ -62,6 +62,73 @@ public class Tweet_Model
             }
             
         }
+        public static ArrayList<Tweet> getAllTweetUser(String username)
+        {
+            ArrayList<Tweet> allTweetsUser = new ArrayList();
+            try{
+                int userId = 0;
+                Connection connection2 = DBConnection.getDBConnection();
+                String query2 = "select id FROM user where username = ?";
+                
+                PreparedStatement statement2 = connection2.prepareStatement(query2);
+                statement2.setString(1, username);
+                ResultSet results2 = statement2.executeQuery(); 
+                while(results2.next())
+                {
+                    userId = results2.getInt("id");
+                    try
+                    {
+                        Connection connection = DBConnection.getDBConnection();
+                        String query = "select id,text,user_id, timestamp, image_filename FROM tweet"
+                                + " where user_id = ?";
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setInt(1, userId);
+                        ResultSet results = statement.executeQuery(); 
+                        while(results.next())
+                        {
+                            if(results.getString("image_filename") == null)
+                            {
+                                String text = results.getString("text");
+                                Timestamp timestamp = results.getTimestamp("timestamp");
+                                int id = results.getInt("id");
+                                int user_id = results.getInt("user_id");
+                                Tweet currentTweet = new Tweet(id, text, user_id, null, timestamp, false, 0);
+                                allTweetsUser.add(currentTweet);
+                            }
+                            else
+                            {
+                                String text = results.getString("text");
+                                Timestamp timestamp = results.getTimestamp("timestamp");
+                                int id = results.getInt("id");
+                                int user_id = results.getInt("user_id");
+                                String filename = results.getString("image_filename");
+                                Tweet currentTweet = new Tweet(id, text, user_id, filename, timestamp, false, 0);
+                                allTweetsUser.add(currentTweet);
+                            }
+                        }
+                         results.close();
+                        statement.close();
+                        connection.close();
+
+                        return allTweetsUser;
+                    }catch(Exception e)
+                    {
+                        
+                    }
+                    
+                    }
+                    results2.close();
+                    statement2.close();
+                    connection2.close();
+                    
+            }catch(Exception e)
+            {
+               System.out.println(e);
+               return allTweetsUser; 
+            }
+            return allTweetsUser;
+        }
+        
         /** To start, I know that this is an awful way to do this
          *  but for the purpose it is still the most convinient
          *  currently for me. 
@@ -325,7 +392,53 @@ public class Tweet_Model
                
             }
         }
-        //Make Tweet
+        //Make Tweet text only
         public static void makeTweet(String text, String username)
+        {
+            try
+            {
+                
+                Connection connection = DBConnection.getDBConnection();
+                String query = "select id FROM user where "
+                        + " username = ?";
+                
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, username);
+                ResultSet results = statement.executeQuery(); 
+                while(results.next())
+                {
+                    int userid = results.getInt("id");
+                    Tweet newTweet = new Tweet(text, userid);
+                    try
+                    {
+                        Connection connection2 = DBConnection.getDBConnection();
+                        String query2 = "insert into tweet ( text, user_id ) "
+                            + " values ( ?, ? )";
+                        PreparedStatement statement2 = connection2.prepareStatement(query2);
+                        statement2.setString(1, newTweet.getText());
+                        statement2.setInt(2, userid);
+                        statement2.execute();
+                        
+                        statement2.close();
+                        connection2.close();
+                    }catch(Exception ex)
+                    {
+                        
+                    }
+                    
+                    
+                }
+                results.close();
+                statement.close();
+                connection.close();
+                
+                
+            }catch(Exception e)
+            {
+               System.out.println(e);
+           
+            }
+            
+        }
                 
 }

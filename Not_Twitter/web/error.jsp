@@ -1,17 +1,14 @@
-<%-- 
-    Document   : error
-    Created on : Apr 26, 2022, 7:42:14 PM
-    Author     : bgebo
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<jsp:include page="/views/header.jsp" />
+<body>
+    <jsp:include page="/views/sidebar.jsp" />
+
+   <jsp:include page="/views/search.jsp"/>
+    <br/>
+    <div class="search">
+        <h2>${Error}</h2><br><!--  -->
+    <h2>${error}</h2>
+    </div>
+    
+<jsp:include page="/views/footer.jsp" />

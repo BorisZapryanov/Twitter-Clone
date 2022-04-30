@@ -39,7 +39,7 @@ public class RequestImage extends HttpServlet
         //image for tweet
         if(userName == null)
         {
-            String tweetID = request.getParameter("tweetID").toString();
+            int tweetID = Integer.parseInt(request.getParameter("tweetID").toString());
                 try 
                 {
                     Connection connection = DBConnection.getDBConnection();
@@ -47,7 +47,7 @@ public class RequestImage extends HttpServlet
                     PreparedStatement preparedStatement = connection.prepareStatement(preparedSQL);
 
                // index starts at 1?
-                    preparedStatement.setString(1, tweetID);
+                    preparedStatement.setInt(1, tweetID);
 
                     ResultSet result = preparedStatement.executeQuery();
                     Blob blob = null;
@@ -55,7 +55,7 @@ public class RequestImage extends HttpServlet
                     while ( result.next() )
                     {
                         blob = result.getBlob("image");
-                        filename = result.getString("filename");
+                        filename = result.getString("image_filename");
                     }
 
                     byte[] imageBytes = blob.getBytes(1, (int)blob.length());
@@ -64,7 +64,7 @@ public class RequestImage extends HttpServlet
                     connection.close();
 
                     String contentType = this.getServletContext().getMimeType(filename);
-
+                   
                     response.setHeader("Content-Type", contentType);
 
                     OutputStream os = response.getOutputStream();

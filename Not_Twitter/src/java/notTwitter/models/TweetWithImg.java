@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import notTwitter.DBConnection;
 import notTwitter.models.UserModel;
+import notTwitter.models.Tweet_Model;
 
 
 /** Used to upload an image file
@@ -36,7 +38,7 @@ import notTwitter.models.UserModel;
  * @author bgebo
  */
 @MultipartConfig(maxFileSize = 1000000)
-public class UploadImage extends HttpServlet {
+public class TweetWithImg extends HttpServlet {
 
     /**This bit is for when used for user profile 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,35 +66,62 @@ public class UploadImage extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             String username = session.getAttribute("username").toString();
-            
-            Connection connection = DBConnection.getDBConnection();
-            String preparedSQL = "update user set image = ?, filename = ? "
-                    + " where username = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(preparedSQL);
+            String text = request.getParameter("tweet_text");
+            Connection connection2 = DBConnection.getDBConnection();
+            String query2 = "select id FROM user where "
+                        + " username = ?";
+                
+            PreparedStatement statement2 = connection2.prepareStatement(query2);
+            statement2.setString(1, username);
+            ResultSet results = statement2.executeQuery(); 
+            while(results.next())
+            {
+                int userid = results.getInt("id");
+                try
+                {
 
-            // index starts at 1?
-            preparedStatement.setBlob(1, inputStream);
-            preparedStatement.setString(2, fileName);
-            preparedStatement.setString(3, username);
+                    Connection connection = DBConnection.getDBConnection();
+                    String preparedSQL = "insert into tweet ( text, user_id, image, image_filename ) "
+                            + " values ( ?, ?, ?, ? )";
+                    PreparedStatement preparedStatement = connection.prepareStatement(preparedSQL);
 
-            preparedStatement.executeUpdate();
+                    // index starts at 1?
+                    preparedStatement.setString(1, text);
+                    preparedStatement.setInt(2, userid);
+                    preparedStatement.setBlob(3, inputStream);
+                    preparedStatement.setString(4, fileName);
+                    
 
-            preparedStatement.close();
-            connection.close();
-            session.setAttribute("hasImage", UserModel.hasImage(username));
-                   
+                    preparedStatement.execute();
+
+                    preparedStatement.close();
+                    connection.close();
+                    
+
+                    
+                } catch (SQLException ex) {
+                    request.setAttribute("error", ex.toString());
+                    String url = "/error.jsp";
+                    getServletContext().getRequestDispatcher(url).forward(request, response);
+                } catch (ClassNotFoundException ex)
+                {
+                    request.setAttribute("error", ex.toString());
+                    String url = "/error.jsp";
+                    getServletContext().getRequestDispatcher(url).forward(request, response);
+
+
+
+                }
+            }
+            results.close();
+            statement2.close();
+            connection2.close();
             String url = "/Not_Twitter";
             getServletContext().getRequestDispatcher(url).forward(request, response);
-
-        } catch (SQLException ex) {
-            request.setAttribute("error", ex.toString());
-            String url = "/error.jsp";
-            getServletContext().getRequestDispatcher(url).forward(request, response);
-        } catch (ClassNotFoundException ex) {
-            request.setAttribute("error", ex.toString());
-            String url = "/error.jsp";
-            getServletContext().getRequestDispatcher(url).forward(request, response);
-        
+           
+        }catch(Exception e)
+        {
+            
         }
     }
 
